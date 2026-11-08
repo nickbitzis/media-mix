@@ -1,0 +1,769 @@
+{
+ "brand": "Juniper Row (made up)",
+ "weeks": 156,
+ "train_weeks": 130,
+ "holdout_weeks": 26,
+ "first_week": "2023-01-02",
+ "last_week": "2025-12-22",
+ "channels": [
+  {
+   "channel": "tv",
+   "label": "TV"
+  },
+  {
+   "channel": "search",
+   "label": "Paid search"
+  },
+  {
+   "channel": "social",
+   "label": "Paid social"
+  },
+  {
+   "channel": "display",
+   "label": "Display"
+  },
+  {
+   "channel": "podcast",
+   "label": "Podcast"
+  },
+  {
+   "channel": "influencer",
+   "label": "Influencer"
+  },
+  {
+   "channel": "email",
+   "label": "Email"
+  }
+ ],
+ "fit": {
+  "base": {
+   "holdout_mape": 0.011,
+   "train_mape": 0.0116,
+   "lambda": 0.03,
+   "hyper": {
+    "tv": {
+     "adstock": {
+      "kind": "weibull",
+      "decay": 0.0,
+      "shape": 2.0,
+      "scale": 3.0
+     },
+     "adstock_label": "weibull(shape=2, scale=3)",
+     "hill": {
+      "half_sat": 0.75,
+      "shape": 2.0
+     }
+    },
+    "search": {
+     "adstock": {
+      "kind": "geometric",
+      "decay": 0.4,
+      "shape": 1.0,
+      "scale": 1.0
+     },
+     "adstock_label": "geometric(decay=0.4)",
+     "hill": {
+      "half_sat": 1.5,
+      "shape": 1.5
+     }
+    },
+    "social": {
+     "adstock": {
+      "kind": "geometric",
+      "decay": 0.3,
+      "shape": 1.0,
+      "scale": 1.0
+     },
+     "adstock_label": "geometric(decay=0.3)",
+     "hill": {
+      "half_sat": 1.0,
+      "shape": 1.0
+     }
+    },
+    "display": {
+     "adstock": {
+      "kind": "geometric",
+      "decay": 0.0,
+      "shape": 1.0,
+      "scale": 1.0
+     },
+     "adstock_label": "geometric(decay=0)",
+     "hill": {
+      "half_sat": 0.5,
+      "shape": 3.0
+     }
+    },
+    "podcast": {
+     "adstock": {
+      "kind": "weibull",
+      "decay": 0.0,
+      "shape": 2.0,
+      "scale": 3.0
+     },
+     "adstock_label": "weibull(shape=2, scale=3)",
+     "hill": {
+      "half_sat": 3.0,
+      "shape": 3.0
+     }
+    },
+    "influencer": {
+     "adstock": {
+      "kind": "geometric",
+      "decay": 0.4,
+      "shape": 1.0,
+      "scale": 1.0
+     },
+     "adstock_label": "geometric(decay=0.4)",
+     "hill": {
+      "half_sat": 1.0,
+      "shape": 1.5
+     }
+    },
+    "email": {
+     "adstock": {
+      "kind": "geometric",
+      "decay": 0.1,
+      "shape": 1.0,
+      "scale": 1.0
+     },
+     "adstock_label": "geometric(decay=0.1)",
+     "hill": {
+      "half_sat": 0.5,
+      "shape": 1.0
+     }
+    }
+   },
+   "beta": {
+    "tv": 489713.06,
+    "search": 281979.86,
+    "social": 219002.79,
+    "display": 14668.69,
+    "podcast": 0.0,
+    "influencer": 248678.11,
+    "email": 91111.33
+   },
+   "evaluations": 2112,
+   "prior": []
+  },
+  "calibrated": {
+   "holdout_mape": 0.0112,
+   "train_mape": 0.0117,
+   "lambda": 0.01,
+   "hyper": {
+    "tv": {
+     "adstock": {
+      "kind": "weibull",
+      "decay": 0.0,
+      "shape": 2.0,
+      "scale": 3.0
+     },
+     "adstock_label": "weibull(shape=2, scale=3)",
+     "hill": {
+      "half_sat": 0.75,
+      "shape": 2.0
+     }
+    },
+    "search": {
+     "adstock": {
+      "kind": "geometric",
+      "decay": 0.0,
+      "shape": 1.0,
+      "scale": 1.0
+     },
+     "adstock_label": "geometric(decay=0)",
+     "hill": {
+      "half_sat": 1.0,
+      "shape": 3.0
+     }
+    },
+    "social": {
+     "adstock": {
+      "kind": "geometric",
+      "decay": 0.3,
+      "shape": 1.0,
+      "scale": 1.0
+     },
+     "adstock_label": "geometric(decay=0.3)",
+     "hill": {
+      "half_sat": 0.75,
+      "shape": 1.0
+     }
+    },
+    "display": {
+     "adstock": {
+      "kind": "geometric",
+      "decay": 0.0,
+      "shape": 1.0,
+      "scale": 1.0
+     },
+     "adstock_label": "geometric(decay=0)",
+     "hill": {
+      "half_sat": 0.5,
+      "shape": 3.0
+     }
+    },
+    "podcast": {
+     "adstock": {
+      "kind": "geometric",
+      "decay": 0.0,
+      "shape": 1.0,
+      "scale": 1.0
+     },
+     "adstock_label": "geometric(decay=0)",
+     "hill": {
+      "half_sat": 3.0,
+      "shape": 3.0
+     }
+    },
+    "influencer": {
+     "adstock": {
+      "kind": "geometric",
+      "decay": 0.4,
+      "shape": 1.0,
+      "scale": 1.0
+     },
+     "adstock_label": "geometric(decay=0.4)",
+     "hill": {
+      "half_sat": 1.0,
+      "shape": 1.5
+     }
+    },
+    "email": {
+     "adstock": {
+      "kind": "geometric",
+      "decay": 0.1,
+      "shape": 1.0,
+      "scale": 1.0
+     },
+     "adstock_label": "geometric(decay=0.1)",
+     "hill": {
+      "half_sat": 0.5,
+      "shape": 1.0
+     }
+    }
+   },
+   "beta": {
+    "tv": 515968.72,
+    "search": 115335.29,
+    "social": 226829.04,
+    "display": 9860.12,
+    "podcast": 38576.33,
+    "influencer": 251079.09,
+    "email": 90538.26
+   },
+   "evaluations": 1048,
+   "prior": [
+    {
+     "col": 12,
+     "mean": 0.08143,
+     "weight": 2.702
+    }
+   ]
+  }
+ },
+ "truth_hyper": {
+  "tv": {
+   "adstock": {
+    "kind": "weibull",
+    "decay": 0.0,
+    "shape": 2.0,
+    "scale": 3.0
+   },
+   "adstock_label": "weibull(shape=2, scale=3)",
+   "hill": {
+    "half_sat": 1.0,
+    "shape": 2.0
+   }
+  },
+  "search": {
+   "adstock": {
+    "kind": "geometric",
+    "decay": 0.0,
+    "shape": 1.0,
+    "scale": 1.0
+   },
+   "adstock_label": "geometric(decay=0)",
+   "hill": {
+    "half_sat": 1.5,
+    "shape": 1.0
+   }
+  },
+  "social": {
+   "adstock": {
+    "kind": "geometric",
+    "decay": 0.3,
+    "shape": 1.0,
+    "scale": 1.0
+   },
+   "adstock_label": "geometric(decay=0.3)",
+   "hill": {
+    "half_sat": 1.0,
+    "shape": 1.5
+   }
+  },
+  "display": {
+   "adstock": {
+    "kind": "geometric",
+    "decay": 0.2,
+    "shape": 1.0,
+    "scale": 1.0
+   },
+   "adstock_label": "geometric(decay=0.2)",
+   "hill": {
+    "half_sat": 1.5,
+    "shape": 1.0
+   }
+  },
+  "podcast": {
+   "adstock": {
+    "kind": "weibull",
+    "decay": 0.0,
+    "shape": 1.5,
+    "scale": 3.0
+   },
+   "adstock_label": "weibull(shape=1.5, scale=3)",
+   "hill": {
+    "half_sat": 1.0,
+    "shape": 2.0
+   }
+  },
+  "influencer": {
+   "adstock": {
+    "kind": "geometric",
+    "decay": 0.5,
+    "shape": 1.0,
+    "scale": 1.0
+   },
+   "adstock_label": "geometric(decay=0.5)",
+   "hill": {
+    "half_sat": 0.75,
+    "shape": 2.0
+   }
+  },
+  "email": {
+   "adstock": {
+    "kind": "geometric",
+    "decay": 0.1,
+    "shape": 1.0,
+    "scale": 1.0
+   },
+   "adstock_label": "geometric(decay=0.1)",
+   "hill": {
+    "half_sat": 1.0,
+    "shape": 1.0
+   }
+  }
+ },
+ "roi": [
+  {
+   "channel": "tv",
+   "label": "TV",
+   "true_roi": 1.464,
+   "spend": 5001362.68,
+   "challenge": "Mostly on during peak season, so it is confounded with seasonal demand.",
+   "base": {
+    "roi": 1.702,
+    "ci90": [
+     1.439,
+     1.926
+    ],
+    "error_pct": 16.3,
+    "covers_truth": true,
+    "recovered": true
+   },
+   "calibrated": {
+    "roi": 1.793,
+    "ci90": [
+     1.504,
+     1.991
+    ],
+    "error_pct": 22.5,
+    "covers_truth": false,
+    "recovered": true
+   }
+  },
+  {
+   "channel": "search",
+   "label": "Paid search",
+   "true_roi": 1.113,
+   "spend": 7533160.15,
+   "challenge": "Always on, and its budget follows demand that other channels created.",
+   "base": {
+    "roi": 1.652,
+    "ci90": [
+     0.803,
+     1.882
+    ],
+    "error_pct": 48.4,
+    "covers_truth": true,
+    "recovered": false
+   },
+   "calibrated": {
+    "roi": 0.942,
+    "ci90": [
+     0.92,
+     0.949
+    ],
+    "error_pct": -15.4,
+    "covers_truth": false,
+    "recovered": true
+   }
+  },
+  {
+   "channel": "social",
+   "label": "Paid social",
+   "true_roi": 1.883,
+   "spend": 5451889.06,
+   "challenge": "Shares a campaign calendar with display (correlated spend).",
+   "base": {
+    "roi": 2.507,
+    "ci90": [
+     1.856,
+     3.04
+    ],
+    "error_pct": 33.1,
+    "covers_truth": true,
+    "recovered": false
+   },
+   "calibrated": {
+    "roi": 2.965,
+    "ci90": [
+     2.155,
+     3.427
+    ],
+    "error_pct": 57.5,
+    "covers_truth": false,
+    "recovered": false
+   }
+  },
+  {
+   "channel": "display",
+   "label": "Display",
+   "true_roi": 0.786,
+   "spend": 4456723.32,
+   "challenge": "Shares a campaign calendar with social (correlated spend).",
+   "base": {
+    "roi": 0.322,
+    "ci90": [
+     0.0,
+     0.871
+    ],
+    "error_pct": -59.0,
+    "covers_truth": true,
+    "recovered": false
+   },
+   "calibrated": {
+    "roi": 0.217,
+    "ci90": [
+     0.0,
+     0.738
+    ],
+    "error_pct": -72.4,
+    "covers_truth": false,
+    "recovered": false
+   }
+  },
+  {
+   "channel": "podcast",
+   "label": "Podcast",
+   "true_roi": 1.495,
+   "spend": 2343123.87,
+   "challenge": "Flat sponsorship contract with almost no spend variation.",
+   "base": {
+    "roi": 0.0,
+    "ci90": [
+     0.0,
+     0.037
+    ],
+    "error_pct": -100.0,
+    "covers_truth": false,
+    "recovered": false
+   },
+   "calibrated": {
+    "roi": 0.077,
+    "ci90": [
+     0.0,
+     0.164
+    ],
+    "error_pct": -94.9,
+    "covers_truth": false,
+    "recovered": false
+   }
+  },
+  {
+   "channel": "influencer",
+   "label": "Influencer",
+   "true_roi": 2.401,
+   "spend": 1283968.68,
+   "challenge": "",
+   "base": {
+    "roi": 2.9,
+    "ci90": [
+     2.535,
+     3.225
+    ],
+    "error_pct": 20.8,
+    "covers_truth": false,
+    "recovered": true
+   },
+   "calibrated": {
+    "roi": 2.928,
+    "ci90": [
+     2.549,
+     3.208
+    ],
+    "error_pct": 22.0,
+    "covers_truth": false,
+    "recovered": true
+   }
+  },
+  {
+   "channel": "email",
+   "label": "Email",
+   "true_roi": 3.964,
+   "spend": 1329628.98,
+   "challenge": "",
+   "base": {
+    "roi": 3.949,
+    "ci90": [
+     3.606,
+     4.531
+    ],
+    "error_pct": -0.4,
+    "covers_truth": true,
+    "recovered": true
+   },
+   "calibrated": {
+    "roi": 3.925,
+    "ci90": [
+     3.58,
+     4.458
+    ],
+    "error_pct": -1.0,
+    "covers_truth": true,
+    "recovered": true
+   }
+  }
+ ],
+ "lift_test": {
+  "channel": "search",
+  "test_weeks": [
+   93,
+   98
+  ],
+  "window_weeks": [
+   93,
+   102
+  ],
+  "iroas": 0.991,
+  "se": 0.071,
+  "ci90": [
+   0.874,
+   1.108
+  ],
+  "true_iroas": 1.05,
+  "regions": 80,
+  "treated_share": 0.485
+ },
+ "bootstrap": {
+  "draws": 200,
+  "block_weeks": 8
+ },
+ "current_weekly": {
+  "tv": 167782.56,
+  "search": 71815.41,
+  "social": 45944.77,
+  "display": 28944.8,
+  "podcast": 17986.74,
+  "influencer": 21283.42,
+  "email": 5972.6
+ },
+ "plan": {
+  "quarter_budget": 4676493.95,
+  "model": "calibrated",
+  "solver": "slsqp",
+  "bounds": {
+   "tv": [
+    83891.28,
+    335565.13
+   ],
+   "search": [
+    35907.7,
+    143630.82
+   ],
+   "social": [
+    22972.39,
+    91889.54
+   ],
+   "display": [
+    14472.4,
+    57889.6
+   ],
+   "podcast": [
+    8993.37,
+    35973.48
+   ],
+   "influencer": [
+    10641.71,
+    42566.84
+   ],
+   "email": [
+    2986.3,
+    11945.21
+   ]
+  },
+  "current": {
+   "weekly_spend": {
+    "tv": 167782.56,
+    "search": 71815.41,
+    "social": 45944.77,
+    "display": 28944.8,
+    "podcast": 17986.74,
+    "influencer": 21283.42,
+    "email": 5972.6
+   },
+   "quarter_spend": 4676493.95,
+   "quarter_media_revenue": 8444828.95,
+   "quarter_media_revenue_ci90": [
+    7558445.72,
+    8923003.82
+   ],
+   "quarter_true_media_revenue": 7482251.64,
+   "roi": 1.8058,
+   "roi_ci90": [
+    1.6163,
+    1.9081
+   ],
+   "true_roi": 1.6
+  },
+  "optimized": {
+   "weekly_spend": {
+    "tv": 175846.73,
+    "search": 64221.52,
+    "social": 41684.24,
+    "display": 14472.4,
+    "podcast": 8993.37,
+    "influencer": 42566.84,
+    "email": 11945.21
+   },
+   "quarter_spend": 4676493.95,
+   "quarter_media_revenue": 9312769.8,
+   "quarter_media_revenue_ci90": [
+    8381779.02,
+    9833414.74
+   ],
+   "quarter_true_media_revenue": 8155331.2,
+   "roi": 1.9914,
+   "roi_ci90": [
+    1.7923,
+    2.1027
+   ],
+   "true_roi": 1.7439
+  },
+  "lift_pct": 10.28,
+  "true_lift_pct": 9.0,
+  "allocation_ci90": {
+   "tv": [
+    2211203.84,
+    2347375.2
+   ],
+   "search": [
+    795444.83,
+    903475.86
+   ],
+   "social": [
+    439745.93,
+    605945.27
+   ],
+   "display": [
+    188141.19,
+    262031.67
+   ],
+   "podcast": [
+    116913.81,
+    116913.81
+   ],
+   "influencer": [
+    553368.87,
+    553368.87
+   ],
+   "email": [
+    155287.68,
+    155287.68
+   ]
+  },
+  "lift_pct_ci90": [
+   8.85,
+   11.8
+  ],
+  "prob_beats_current": 1.0
+ },
+ "timings": {
+  "simulate_s": 0.0,
+  "search_s": 3.13,
+  "calibrate_s": 1.73,
+  "bootstrap_s": 0.6,
+  "optimize_s": 3.5,
+  "total_s": 8.97
+ },
+ "plan_base": {
+  "lift_pct": 9.75,
+  "true_lift_pct": 6.97,
+  "lift_pct_ci90": [
+   8.35,
+   11.69
+  ],
+  "optimized": {
+   "weekly_spend": {
+    "tv": 166368.13,
+    "search": 75620.9,
+    "social": 39763.46,
+    "display": 14472.4,
+    "podcast": 8993.37,
+    "influencer": 42566.84,
+    "email": 11945.21
+   },
+   "quarter_spend": 4676493.95,
+   "quarter_media_revenue": 9413982.37,
+   "quarter_media_revenue_ci90": [
+    8140299.31,
+    9812016.71
+   ],
+   "quarter_true_media_revenue": 8004005.48,
+   "roi": 2.013,
+   "roi_ci90": [
+    1.7407,
+    2.0982
+   ],
+   "true_roi": 1.7115
+  }
+ },
+ "bayesian": "Skipped. The calibrated ridge is the posterior mode of a Gaussian model with a Normal prior on the lift tested coefficient; a sampler would add hyperparameter uncertainty.",
+ "gate": {
+  "pass": true,
+  "tolerance_pct": 30.0,
+  "checks": [
+   {
+    "check": "Influencer",
+    "recovered": 2.928,
+    "true": 2.401,
+    "error_pct": 21.9,
+    "pass": true
+   },
+   {
+    "check": "Email",
+    "recovered": 3.925,
+    "true": 3.964,
+    "error_pct": -1.0,
+    "pass": true
+   },
+   {
+    "check": "Paid social + display combined",
+    "recovered": 1.729,
+    "true": 1.39,
+    "error_pct": 24.4,
+    "pass": true
+   }
+  ]
+ }
+}

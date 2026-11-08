@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Media Mix</title>
+<style>
+:root {
+  --bg: #f6f7f9; --panel: #ffffff; --text: #1c2330; --muted: #5d6878; --border: #dde2e9;
+  --track: #e8ebf0; --accent: #2f6fdb; --accent-soft: #e6eefc; --good: #11804f; --bad: #b42318;
+  --base: #c9d0da; --truth: #1c2330;
+  --tv: #2f6fdb; --search: #d08a00; --social: #7c3aed; --display: #0e9aa7; --podcast: #b42318; --influencer: #11804f; --email: #c2410c;
+  --radius: 10px; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #11151c; --panel: #181e27; --text: #e6eaf0; --muted: #9aa5b5; --border: #2a3340;
+    --track: #232b37; --accent: #6c9cf0; --accent-soft: #1c2a44; --good: #4ccb8f; --bad: #ff8a7a;
+    --base: #3a4452; --truth: #e6eaf0;
+    --tv: #6c9cf0; --search: #f3c46b; --social: #b197fc; --display: #4fd1dc; --podcast: #ff8a7a; --influencer: #4ccb8f; --email: #f59e5b;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+html, body { overflow-x: hidden; }
+body { margin: 0; background: var(--bg); color: var(--text); font-size: 14px; }
+header { padding: 16px 24px 4px; }
+h1 { font-size: 20px; margin: 0 0 4px; }
+h2 { font-size: 13px; margin: 0 0 10px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+p { margin: 6px 0; line-height: 1.45; }
+.muted { color: var(--muted); }
+.small { font-size: 12px; }
+main { padding: 8px 24px 24px; display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.panel { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; min-width: 0; }
+.wide { grid-column: 1 / -1; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.kpi { border: 1px solid var(--border); border-radius: 8px; padding: 10px; background: var(--bg); min-width: 0; }
+.kpi .v { font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.kpi .l { font-size: 12px; color: var(--muted); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { text-align: left; padding: 6px 8px; border-top: 1px solid var(--border); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; border-top: 0; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+tr.hi td { background: var(--accent-soft); }
+.scroll { overflow-x: auto; max-width: 100%; }
+.neg { color: var(--bad); }
+.pos { color: var(--good); }
+svg { display: block; width: 100%; height: auto; }
+.axis text { fill: var(--muted); font-size: 11px; }
+.axis line { stroke: var(--border); }
+.grid line { stroke: var(--track); }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; margin-top: 8px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sq { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.sw { width: 14px; height: 3px; border-radius: 2px; display: inline-block; }
+.multiples { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.mult { border: 1px solid var(--border); border-radius: 8px; padding: 8px; min-width: 0; }
+.mult .t { font-size: 12px; font-weight: 600; }
+.mult .s { font-size: 11px; color: var(--muted); }
+.sliders { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px 16px; margin: 10px 0; }
+.sl { min-width: 0; }
+.sl label { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; }
+input[type=range] { width: 100%; accent-color: var(--accent); }
+input[type=number] { width: 100%; min-width: 0; padding: 5px 6px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); font: inherit; font-variant-numeric: tabular-nums; }
+button { padding: 7px 12px; border: 0; border-radius: 7px; background: var(--accent); color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.big { font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.note { padding: 10px; border-radius: 8px; background: var(--accent-soft); margin: 10px 0; }
+.err { color: var(--bad); }
+.inputs { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; margin: 8px 0; }
+.inputs label { font-size: 12px; color: var(--muted); display: block; }
+@media (max-width: 900px) {
+  main { grid-template-columns: minmax(0, 1fr); padding: 8px 16px 16px; }
+  header { padding: 16px 16px 4px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Media Mix</h1>
+  <p class="muted">What each channel actually drove for Juniper Row, a made-up direct-to-consumer bedding brand, and how to split next quarter's budget. The data comes from a seeded synthetic world, so every estimate is checked against the true answer.</p>
+</header>
+<main>
+  <section class="panel wide"><div class="kpis" id="kpis"></div></section>
+
+  <section class="panel wide">
+    <h2>Revenue decomposition (calibrated model)</h2>
+    <div id="decomp"></div>
+    <div class="legend" id="decomp-legend"></div>
+    <p class="small muted">Weekly revenue split into baseline (trend, seasonality, holidays, price, promotions, competitor activity) and each channel. The line is actual revenue. The shaded weeks on the right are the holdout the model never saw.</p>
+  </section>
+
+  <section class="panel wide">
+    <h2>Recovered vs true ROI</h2>
+    <div id="roi"></div>
+    <div class="legend">
+      <span><i class="sq" style="background:var(--base)"></i>Model, 90% interval</span>
+      <span><i class="sq" style="background:var(--accent)"></i>Calibrated with the search lift test, 90% interval</span>
+      <span><i class="sq" style="background:var(--truth);border-radius:5px"></i>True ROI</span>
+    </div>
+    <div class="scroll"><table id="roi-table"></table></div>
+    <p class="small muted" id="roi-note"></p>
+  </section>
+
+  <section class="panel wide">
+    <h2>Response curves (weekly, after carryover settles)</h2>
+    <div class="multiples" id="curves"></div>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--accent)"></i>Model</span>
+      <span><i class="sq" style="background:var(--accent-soft)"></i>90% band</span>
+      <span><i class="sw" style="background:var(--muted)"></i>Truth (dashed)</span>
+      <span><i class="sq" style="background:var(--truth);border-radius:5px"></i>Current spend</span>
+    </div>
+    <p class="small muted">Each panel has its own y axis. Marginal ROI is the revenue from the next dollar at current spend; average ROI is total revenue divided by spend. A channel worth keeping can still have a marginal ROI below 1.</p>
+  </section>
+
+  <section class="panel wide">
+    <h2>Budget optimizer: next quarter (13 weeks)</h2>
+    <div class="row"><span class="small muted">Quarter budget</span><span class="big" id="budget-v">$0</span></div>
+    <input type="range" id="budget" min="2000000" max="9000000" step="50000" aria-label="Quarter budget in dollars">
+    <p class="small muted">Per channel caps, as a share of that channel's current share of the budget. Each channel also keeps at least 50% of its current share (or its cap, if lower).</p>
+    <div class="sliders" id="caps"></div>
+    <div class="scroll"><table id="opt"></table></div>
+    <div class="note small" id="opt-note"></div>
+  </section>
+
+  <section class="panel wide">
+    <h2>Scenario planner</h2>
+    <p class="small muted">Quarterly spend per channel. Starts at the current mix; edit any channel and compare.</p>
+    <div class="inputs" id="scn-in"></div>
+    <div class="row"><button id="scn-go">Compare</button><button id="scn-reset" style="background:var(--track);color:var(--text)">Reset to current</button></div>
+    <div class="scroll"><table id="scn"></table></div>
+    <p class="small muted">Ranges are 90% intervals over block bootstrap draws. True revenue is known only because the data is synthetic.</p>
+  </section>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+const money = (v) => (v < 0 ? "-$" : "$") + Math.abs(Math.round(v)).toLocaleString();
+const short = (v) => { const a = Math.abs(v); const s = v < 0 ? "-" : ""; return a >= 1e6 ? s + "$" + (a / 1e6).toFixed(a >= 1e7 ? 0 : 1) + "M" : a >= 1e3 ? s + "$" + Math.round(a / 1e3) + "k" : s + "$" + Math.round(a); };
+const pct = (v, d = 1) => (v >= 0 ? "+" : "") + v.toFixed(d) + "%";
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const Q = 13;
+let REP = null, CH = [], LABEL = {};
+
+function niceTicks(max, n = 4) {
+  if (max <= 0) return [0];
+  const raw = max / n, p = Math.pow(10, Math.floor(Math.log10(raw)));
+  const step = [1, 2, 2.5, 5, 10].map((m) => m * p).find((s) => s >= raw);
+  const out = []; for (let v = 0; v <= max + 1e-9; v += step) out.push(v); return out;
+}
+
+function kpis(rep) {
+  const p = rep.plan, lt = rep.lift_test, f = rep.fit.calibrated;
+  const items = [
+    [(f.holdout_mape * 100).toFixed(2) + "%", "holdout MAPE on weekly revenue (26 weeks)"],
+    [rep.gate.pass ? "Pass" : "Fail", `ROI gate: well-identified channels within ${rep.gate.tolerance_pct}% of truth`],
+    [lt.iroas.toFixed(2) + " ± " + (1.645 * lt.se).toFixed(2), `search lift test iROAS (true ${lt.true_iroas.toFixed(2)})`],
+    [pct(p.lift_pct), `predicted gain from reallocating (true ${pct(p.true_lift_pct)})`],
+    [pct(rep.plan_base.true_lift_pct), "true gain if you trust the uncalibrated model"],
+  ];
+  $("kpis").innerHTML = items.map(([v, l]) => `<div class="kpi"><div class="v">${v}</div><div class="l">${l}</div></div>`).join("");
+}
+
+function decompChart(d) {
+  const W = 1100, H = 330, L = 60, R = 12, T = 10, B = 28;
+  const n = d.week.length, keys = ["baseline", ...CH];
+  const tot = d.week.map((_, i) => keys.reduce((s, k) => s + Math.max(d.series[k][i], 0), 0));
+  const ymax = Math.max(...tot, ...d.actual) * 1.04;
+  const sx = (i) => L + (i / (n - 1)) * (W - L - R), sy = (y) => T + (1 - y / ymax) * (H - T - B);
+  let g = `<rect x="${sx(d.holdout_start)}" y="${T}" width="${sx(n - 1) - sx(d.holdout_start)}" height="${H - T - B}" fill="var(--track)" opacity="0.6"/>`;
+  g += `<g class="grid">` + niceTicks(ymax).map((v) => `<line x1="${L}" x2="${W - R}" y1="${sy(v)}" y2="${sy(v)}"/>`).join("") + `</g>`;
+  const cum = new Array(n).fill(0);
+  for (const k of keys) {
+    const lo = cum.slice(); for (let i = 0; i < n; i++) cum[i] += Math.max(d.series[k][i], 0);
+    const top = cum.map((v, i) => `${sx(i).toFixed(1)},${sy(v).toFixed(1)}`);
+    const bot = lo.map((v, i) => `${sx(i).toFixed(1)},${sy(v).toFixed(1)}`).reverse();
+    const fill = k === "baseline" ? "var(--base)" : `var(--${k})`;
+    g += `<polygon points="${top.concat(bot).join(" ")}" fill="${fill}" opacity="${k === "baseline" ? 1 : 0.85}"/>`;
+  }
+  g += `<polyline fill="none" stroke="var(--truth)" stroke-width="1.4" points="${d.actual.map((v, i) => `${sx(i).toFixed(1)},${sy(v).toFixed(1)}`).join(" ")}"/>`;
+  g += `<g class="axis">` + niceTicks(ymax).map((v) => `<text x="${L - 6}" y="${sy(v) + 4}" text-anchor="end">${short(v)}</text>`).join("");
+  for (let i = 0; i < n; i += 26) g += `<text x="${sx(i)}" y="${H - 8}" text-anchor="middle">${d.week[i].slice(0, 7)}</text>`;
+  g += `<text x="${(sx(d.holdout_start) + sx(n - 1)) / 2}" y="${T + 14}" text-anchor="middle">holdout</text></g>`;
+  $("decomp").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Stacked weekly revenue by baseline and channel">${g}</svg>`;
+  $("decomp-legend").innerHTML = keys.map((k) => `<span><i class="sq" style="background:${k === "baseline" ? "var(--base)" : `var(--${k})`}"></i>${k === "baseline" ? "Baseline" : esc(LABEL[k])}</span>`).join("") +
+    `<span><i class="sw" style="background:var(--truth)"></i>Actual revenue</span>`;
+}
+
+function roiChart(rows) {
+  const W = 1100, rowH = 34, L = 120, R = 16, T = 8, B = 26, H = T + B + rows.length * rowH;
+  const xmax = Math.max(4.5, ...rows.flatMap((r) => [r.true_roi, r.base.ci90[1], r.calibrated.ci90[1]])) * 1.05;
+  const sx = (v) => L + (v / xmax) * (W - L - R);
+  let g = `<g class="grid">` + niceTicks(xmax, 6).map((v) => `<line x1="${sx(v)}" x2="${sx(v)}" y1="${T}" y2="${H - B}"/>`).join("") + `</g><g class="axis">`;
+  g += niceTicks(xmax, 6).map((v) => `<text x="${sx(v)}" y="${H - 8}" text-anchor="middle">${v.toFixed(1)}</text>`).join("");
+  rows.forEach((r, i) => {
+    const y = T + i * rowH + rowH / 2;
+    g += `<text x="${L - 8}" y="${y + 4}" text-anchor="end">${esc(r.label)}</text>`;
+    for (const [k, dy, col] of [["base", -6, "var(--base)"], ["calibrated", 6, "var(--accent)"]]) {
+      const m = r[k];
+      g += `<line x1="${sx(m.ci90[0])}" x2="${sx(Math.max(m.ci90[1], m.ci90[0] + xmax / 400))}" y1="${y + dy}" y2="${y + dy}" stroke="${col}" stroke-width="6" stroke-linecap="round"/>`;
+      g += `<circle cx="${sx(m.roi)}" cy="${y + dy}" r="4" fill="${col}" stroke="var(--panel)" stroke-width="1.5"/>`;
+    }
+    g += `<line x1="${sx(r.true_roi)}" x2="${sx(r.true_roi)}" y1="${y - 13}" y2="${y + 13}" stroke="var(--truth)" stroke-width="2.5"/>`;
+  });
+  g += `</g>`;
+  $("roi").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Recovered and true ROI per channel with intervals">${g}</svg>`;
+  const head = `<tr><th>Channel</th><th class="num">True ROI</th><th class="num">Model</th><th class="num">90% CI</th><th class="num">Error</th><th class="num">Calibrated</th><th class="num">90% CI</th><th class="num">Error</th><th>Why it is hard</th></tr>`;
+  const cell = (m) => `<td class="num">${m.roi.toFixed(2)}</td><td class="num">${m.ci90[0].toFixed(2)} to ${m.ci90[1].toFixed(2)}</td><td class="num ${m.recovered ? "pos" : "neg"}">${pct(m.error_pct, 0)}</td>`;
+  $("roi-table").innerHTML = head + rows.map((r) => `<tr><td>${esc(r.label)}</td><td class="num">${r.true_roi.toFixed(2)}</td>${cell(r.base)}${cell(r.calibrated)}<td class="small muted">${esc(r.challenge || "Well identified: on and off weeks, independent of demand.")}</td></tr>`).join("");
+  $("roi-note").textContent = "ROI is revenue per media dollar over the 130 training weeks. Green errors are within 25% of truth. Intervals hold the searched adstock and saturation fixed, so they are narrower than the real uncertainty.";
+}
+
+function curveCharts(curves) {
+  $("curves").innerHTML = CH.map((c) => {
+    const k = curves[c], W = 260, H = 150, L = 40, R = 8, T = 8, B = 22;
+    const xmax = k.spend[k.spend.length - 1];
+    const ymax = Math.max(...k.revenue_hi, ...k.true_revenue, 1) * 1.05;
+    const sx = (x) => L + (x / xmax) * (W - L - R), sy = (y) => T + (1 - y / ymax) * (H - T - B);
+    const pts = (arr) => arr.map((v, i) => `${sx(k.spend[i]).toFixed(1)},${sy(v).toFixed(1)}`).join(" ");
+    const band = pts(k.revenue_hi) + " " + k.revenue_lo.map((v, i) => `${sx(k.spend[i]).toFixed(1)},${sy(v).toFixed(1)}`).reverse().join(" ");
+    let g = `<g class="grid">` + niceTicks(ymax, 3).map((v) => `<line x1="${L}" x2="${W - R}" y1="${sy(v)}" y2="${sy(v)}"/>`).join("") + `</g>`;
+    g += `<polygon points="${band}" fill="var(--accent-soft)"/>`;
+    g += `<polyline fill="none" stroke="var(--muted)" stroke-width="1.4" stroke-dasharray="4 3" points="${pts(k.true_revenue)}"/>`;
+    g += `<polyline fill="none" stroke="var(--accent)" stroke-width="2" points="${pts(k.revenue)}"/>`;
+    g += `<line x1="${sx(k.current_spend)}" x2="${sx(k.current_spend)}" y1="${T}" y2="${H - B}" stroke="var(--truth)" stroke-width="1" stroke-dasharray="2 2"/>`;
+    g += `<circle cx="${sx(k.current_spend)}" cy="${sy(k.current_revenue)}" r="4" fill="var(--truth)"/>`;
+    g += `<g class="axis">` + niceTicks(ymax, 3).map((v) => `<text x="${L - 4}" y="${sy(v) + 4}" text-anchor="end">${short(v)}</text>`).join("");
+    g += niceTicks(xmax, 3).map((v) => `<text x="${sx(v)}" y="${H - 6}" text-anchor="middle">${short(v)}</text>`).join("") + `</g>`;
+    return `<div class="mult"><div class="t">${esc(k.label)}</div><div class="s">current ${short(k.current_spend)}/wk, marginal ROI ${k.marginal_roi_at_current.toFixed(2)}, average ${k.average_roi_at_current.toFixed(2)}</div>
+      <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(k.label)} response curve">${g}</svg></div>`;
+  }).join("");
+}
+
+function capSliders() {
+  $("caps").innerHTML = CH.map((c) => `<div class="sl"><label for="cap-${c}"><span>${esc(LABEL[c])} cap</span><span id="capv-${c}">200%</span></label>
+    <input type="range" id="cap-${c}" min="0" max="300" step="10" value="200" aria-label="${esc(LABEL[c])} cap"></div>`).join("");
+  for (const c of CH) $(`cap-${c}`).addEventListener("input", () => { $(`capv-${c}`).textContent = $(`cap-${c}`).value + "%"; schedule(); });
+}
+
+let timer = null, seq = 0;
+function schedule() { clearTimeout(timer); timer = setTimeout(runOpt, 200); }
+async function runOpt() {
+  const budget = +$("budget").value;
+  $("budget-v").textContent = money(budget);
+  const cur = REP.current_weekly, curTot = CH.reduce((s, c) => s + cur[c], 0);
+  const bounds = {};
+  for (const c of CH) {
+    const share = (cur[c] / curTot) * budget, cap = +$(`cap-${c}`).value / 100;
+    bounds[c] = { min: Math.min(0.5, cap) * share, max: cap * share };
+  }
+  const my = ++seq;
+  const r = await fetch("/api/optimize", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ quarter_budget: budget, bounds }) });
+  if (my !== seq) return;
+  const body = await r.json();
+  if (!r.ok) { $("opt-note").innerHTML = `<span class="err">${esc(body.detail || "optimizer error")}</span>`; return; }
+  optTable(body);
+}
+
+function optTable(p) {
+  const cw = p.current.weekly_spend, ow = p.optimized.weekly_spend;
+  const head = `<tr><th>Channel</th><th class="num">Current mix</th><th class="num">Optimized</th><th class="num">Change</th><th class="num">Optimized 90% range</th></tr>`;
+  const rows = CH.map((c) => {
+    const a = cw[c] * Q, b = ow[c] * Q, ch = a > 0 ? (b / a - 1) * 100 : 0, rg = p.allocation_ci90[c];
+    return `<tr><td>${esc(LABEL[c])}</td><td class="num">${money(a)}</td><td class="num">${money(b)}</td><td class="num ${ch < 0 ? "neg" : "pos"}">${pct(ch, 0)}</td><td class="num">${short(rg[0])} to ${short(rg[1])}</td></tr>`;
+  }).join("");
+  const tot = (e) => `<td class="num">${money(e.quarter_media_revenue)}</td>`;
+  const foot = `<tr class="hi"><td>Media revenue</td>${tot(p.current)}${tot(p.optimized)}<td class="num">${pct(p.lift_pct)}</td><td class="num">${pct(p.lift_pct_ci90[0])} to ${pct(p.lift_pct_ci90[1])}</td></tr>
+    <tr><td>True media revenue</td><td class="num">${money(p.current.quarter_true_media_revenue)}</td><td class="num">${money(p.optimized.quarter_true_media_revenue)}</td><td class="num ${p.true_lift_pct < 0 ? "neg" : "pos"}">${pct(p.true_lift_pct)}</td><td></td></tr>`;
+  $("opt").innerHTML = head + rows + foot;
+  $("opt-note").textContent = `Solver: ${p.solver}. Under the bootstrap draws, the optimized plan beats the current mix ${(p.prob_beats_current * 100).toFixed(0)}% of the time. The predicted gain runs ahead of the true gain: the optimizer moves money toward channels the model overrates, so its own estimate is biased upward. Confirm big shifts with an experiment before committing.`;
+}
+
+function scnInputs() {
+  $("scn-in").innerHTML = CH.map((c) => `<div><label for="scn-${c}">${esc(LABEL[c])}</label><input type="number" id="scn-${c}" min="0" step="10000" value="${Math.round(REP.current_weekly[c] * Q)}"></div>`).join("");
+}
+async function runScn() {
+  const user = Object.fromEntries(CH.map((c) => [c, Math.max(0, +$(`scn-${c}`).value || 0)]));
+  const r = await fetch("/api/scenarios", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ user }) });
+  const s = await r.json();
+  if (!r.ok) { $("scn").innerHTML = `<tr><td class="err">${esc(s.detail || "error")}</td></tr>`; return; }
+  const head = `<tr><th>Scenario</th><th class="num">Quarter spend</th><th class="num">Media revenue</th><th class="num">90% range</th><th class="num">ROI</th><th class="num">ROI 90% range</th><th class="num">True revenue</th><th class="num">True ROI</th></tr>`;
+  const names = { current: "Current mix", optimized: "Optimized", user: "Your scenario" };
+  $("scn").innerHTML = head + Object.entries(s).map(([k, e]) => `<tr class="${k === "user" ? "hi" : ""}"><td>${names[k]}</td><td class="num">${money(e.quarter_spend)}</td>
+    <td class="num">${money(e.quarter_media_revenue)}</td><td class="num">${short(e.quarter_media_revenue_ci90[0])} to ${short(e.quarter_media_revenue_ci90[1])}</td>
+    <td class="num">${e.roi.toFixed(2)}</td><td class="num">${e.roi_ci90[0].toFixed(2)} to ${e.roi_ci90[1].toFixed(2)}</td>
+    <td class="num">${money(e.quarter_true_media_revenue)}</td><td class="num">${e.true_roi.toFixed(2)}</td></tr>`).join("");
+}
+
+async function main() {
+  REP = await (await fetch("/api/fit")).json();
+  CH = REP.channels.map((c) => c.channel); LABEL = Object.fromEntries(REP.channels.map((c) => [c.channel, c.label]));
+  kpis(REP);
+  roiChart(REP.roi);
+  const [d, k] = await Promise.all([fetch("/api/decomposition").then((r) => r.json()), fetch("/api/curves").then((r) => r.json())]);
+  decompChart(d);
+  curveCharts(k);
+  $("budget").value = Math.round(REP.plan.quarter_budget / 50000) * 50000;
+  capSliders();
+  $("budget").addEventListener("input", schedule);
+  optTable(REP.plan);
+  $("budget-v").textContent = money(REP.plan.quarter_budget);
+  scnInputs();
+  $("scn-go").addEventListener("click", runScn);
+  $("scn-reset").addEventListener("click", () => { scnInputs(); runScn(); });
+  runScn();
+}
+main();
+</script>
+</body>
+</html>
